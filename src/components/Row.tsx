@@ -23,4 +23,4 @@ function Row({products, changeCheckbox}: IPropsDocuments) {
     );
 };
 
-export default Row
+export default React.memo(Row)

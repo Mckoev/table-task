@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import getProducts from "../api/getProducts";
 import sortByField from "../helpers/sortByField";
 import {IProducts} from "../types/interfaces";
@@ -56,7 +56,7 @@ function UseTableProductLogic ()  {
         setProducts(newList)
     }
 
-    const handleSearch = (event) => {
+    const handleSearch = useCallback((event) => {
         event.preventDefault()
          setSearchText(event.target.value);
         // Check if the search text is empty and set the filtered data to the original data if it is
@@ -64,6 +64,7 @@ function UseTableProductLogic ()  {
             setProducts(initialProduct);
             return;
         }
+
         // Filter the data based on the search text
         const filteredItems = initialProduct.filter(item =>
             Object.values(item)
@@ -72,7 +73,7 @@ function UseTableProductLogic ()  {
                 .includes(event.target.value.toLowerCase())
         );
          setProducts(filteredItems);
-    };
+    }, [initialProduct, setProducts, setSearchText]);
 
     return {
         searchText,

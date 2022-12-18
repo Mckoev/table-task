@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {IProducts} from "../types/interfaces";
 import sendRemovedProducts from "../api/sendRemovedProducts";
-import useTableProductLogic from "../hooks/useTableProductLogic";
 
 const style = {
     position: 'absolute',
