@@ -18,8 +18,6 @@ import LoadingIndicator from "./LoadingIndicator";
 
 function TableProducts() {
 
-    console.log('table')
-
     const {
         handleSearch,
         checkboxSelectAll,
