@@ -18,8 +18,9 @@ import LoadingIndicator from "./LoadingIndicator";
 
 function TableProducts() {
 
+    console.log('table')
+
     const {
-        searchText,
         handleSearch,
         checkboxSelectAll,
         setSelectAll,
@@ -38,7 +39,7 @@ function TableProducts() {
         <Container>
             {productDownloaded ?
                 (<>
-                    <TextField fullWidth label="Search" value={searchText} onChange={handleSearch}
+                    <TextField fullWidth label="Search" onChange={handleSearch}
                                focused
                                sx={{
                                    marginTop: "20px",

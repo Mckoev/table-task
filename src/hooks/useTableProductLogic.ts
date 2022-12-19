@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import getProducts from "../api/getProducts";
 import sortByField from "../helpers/sortByField";
 import {IProducts} from "../types/interfaces";
@@ -8,7 +8,7 @@ function UseTableProductLogic ()  {
 
     const [products, setProducts] = useState<IProducts[]>([])
     const [initialProduct, setInitialProduct] = useState<IProducts[]>([])
-    const [searchText, setSearchText] = useState('');
+    const searchTextRef = useRef('');
     const [checkboxSelectAll, setCheckboxSelectAll] = useState(false)
     const [openModal, setOpenModal] = useState(false);
     const [productDownloaded, setProductDownloaded] = useState(false)
@@ -58,12 +58,7 @@ function UseTableProductLogic ()  {
 
     const handleSearch = useCallback((event) => {
         event.preventDefault()
-         setSearchText(event.target.value);
-        // Check if the search text is empty and set the filtered data to the original data if it is
-        if (event.target.value === '') {
-            setProducts(initialProduct);
-            return;
-        }
+        searchTextRef.current = event.target.value;
 
         // Filter the data based on the search text
         const filteredItems = initialProduct.filter(item =>
@@ -72,11 +67,12 @@ function UseTableProductLogic ()  {
                 .toLowerCase()
                 .includes(event.target.value.toLowerCase())
         );
-         setProducts(filteredItems);
-    }, [initialProduct, setProducts, setSearchText]);
+        if (JSON.stringify(filteredItems) !== JSON.stringify(products)) {
+            setProducts(filteredItems);
+        }
+    }, [initialProduct, searchTextRef.current]);
 
     return {
-        searchText,
         handleSearch,
         checkboxSelectAll,
         setSelectAll,
